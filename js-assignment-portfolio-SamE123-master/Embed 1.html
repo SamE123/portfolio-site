@@ -1,0 +1,67 @@
+This code to display the Github profile and bio is embedded into the carrd website.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub Avatar Display</title>
+<style>
+#avatar-container {
+position: relative;
+width: 500px;
+margin: 0 auto;
+text-align: center;
+}
+
+#avatar-container img {
+width: 100%;
+border: 2px solid #000;
+border-radius: 10px;
+padding: 5px;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#avatar-container p {
+color: white;
+font-style: italic;
+margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div id="avatar-container"></div>
+<script>
+async function fetchAvatar() {
+const username = 'SamE123';
+const url = `https://api.github.com/users/${username}`;
+
+try {
+const response = await fetch(url);
+if (!response.ok) {
+throw new Error('Network response was not ok ' + response.statusText);
+}
+const data = await response.json();
+displayAvatar(data.avatar_url);
+displayBio(data.bio);
+} catch (error) {
+console.error('There has been a problem with your fetch operation:', error);
+}
+}
+
+function displayAvatar(avatarUrl) {
+const avatarContainer = document.getElementById('avatar-container');
+avatarContainer.innerHTML = `<img src="${avatarUrl}" alt="GitHub Avatar">`;
+}
+
+function displayBio(bio) {
+const avatarContainer = document.getElementById('avatar-container');
+const bioElement = document.createElement('p');
+bioElement.textContent = bio || 'No bio available';
+avatarContainer.appendChild(bioElement);
+}
+
+document.addEventListener('DOMContentLoaded', fetchAvatar);
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Party Popper</title>
+<style>
+
+//This code uses CSS Animations and is embedded into the carrd website
+
+#gif-container {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 200px;
+  bottom: 6833px;
+}
+
+#initial-image,
+#animated-gif {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 1s ease;
+  transform-origin: center center;
+}
+
+#animated-gif {
+  display: none;
+}
+</style>
+</head>
+<body>
+<div id="gif-container">
+  <img id="initial-image" src="https://i.imgur.com/qjNJnoW.gif" alt="Initial Image">
+  <img id="animated-gif" src="https://i.imgur.com/tGTk1Dk.gif" alt="Animated GIF">
+</div>
+<audio id="sound" src="https://www.dropbox.com/scl/fi/f6gemvy75u1uczry2hv4d/party-horn.mp3?rlkey=cebw909sqsl4l9yxbryuytzjk&st=snm6vcgr&dl=1"></audio>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const initialImage = document.getElementById('initial-image');
+  const animatedGif = document.getElementById('animated-gif');
+  const sound = document.getElementById('sound');
+
+  const targetPosition = {
+    left: '255px',
+    top: '-145px',
+    width: '500px',
+    height: '500px'
+  };
+
+  initialImage.addEventListener('click', function() {
+    console.log('Initial image clicked');
+    initialImage.style.display = 'none';
+    animatedGif.style.display = 'block';
+
+    animatedGif.style.transform = `translate(${targetPosition.left}, ${targetPosition.top}) scale(${parseInt(targetPosition.width) / 200}, ${parseInt(targetPosition.height) / 200})`;
+
+    sound.play().then(() => {
+      console.log('Sound playing');
+    }).catch((error) => {
+      console.error('Error playing sound:', error);
+    });
+
+    setTimeout(() => {
+      animatedGif.style.display = 'none';
+      initialImage.style.display = 'block';
+      initialImage.style.transform = `translate(${targetPosition.left}, ${targetPosition.top}) scale(${parseInt(targetPosition.width) / 200}, ${parseInt(targetPosition.height) / 200})`;
+
+      setTimeout(() => {
+        initialImage.style.transform = 'translate(0, 0) scale(1, 1)';
+      }, 100);
+    }, 1380);
+  });
+});
+</script>
+</body>
+</html>
